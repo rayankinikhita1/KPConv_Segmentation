@@ -1,0 +1,3 @@
+# KPCNN model config for S3DIS - aligned with original KPConv-PyTorch implementation
+
+_target_: src.models.kpcnn_module.KPCNNLitModule

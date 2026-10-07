@@ -1,0 +1,37 @@
+# @package _global_
+
+# S3DIS training configuration for KPConv Lightning
+# Based on train.yaml and train_semantic_kitti.yaml
+
+defaults:
+  - _self_
+  - common: elecs
+  - data: elecs
+  - model: default
+  - callbacks: default
+  - logger: tensorboard  # Use tensorboard for logging
+  # TODO: Revise this as needed, add overfit option
+  - trainer: default
+  - paths: default
+  - extras: default
+  - hydra: default
+
+# Task name for logging and saving
+# You can overwrite this in experiment configs
+# Overwrite from command line with `python train_s3dis.py tags="[first_tag, second_tag]"`
+task_name: "train"
+
+tags: ["elecs", "kpconv", "point_cloud", "segmentation"]
+
+# Enable training
+train: true
+
+# Enable testing after training
+test: true
+
+# Compile model for faster training with pytorch 2.0
+compile: false
+
+# Seed for random number generators in pytorch, numpy and python.random
+seed: 42
+

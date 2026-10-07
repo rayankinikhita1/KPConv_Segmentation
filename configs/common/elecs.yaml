@@ -1,0 +1,102 @@
+# Data paths and dataset configuration
+data_dir: ${paths.s3dis_elecs_data_dir}
+num_workers: 10
+pin_memory: True
+batch_size: 8
+persistent_workers: True
+name: "ELECS"
+task: "cloud_segmentation"
+
+label_to_names:
+  0: "ground"
+  1: "wall"
+  2: "busbar"
+  3: "wire"
+  4: "tower"
+  5: "media"
+  6: "builds"
+  7: "clutter"
+  8: "small"
+  9: "large"
+
+train_path: "original_ply"
+
+# Dataset splits
+cloud_names: ["substation1", "substation2", "substation3", "substation4"]
+all_splits: [0, 1, 2, 3]
+validation_split: 2
+
+# Data loading parameters
+use_potentials: true
+load_data: true
+input_threads: 10
+expected_N: 30000
+
+# Training parameters
+epoch_steps: 500
+batch_num: 6
+first_subsampling_dl: 0.3
+in_radius: 17.0
+validation_size: 50
+num_layers: 5
+deform_layers: [False, False, False, True, True]
+conv_radius: 2.5
+deform_radius: 5.0
+in_features_dim: 5
+
+# Model parameters
+first_features_dim: 128
+# Move to trainer config
+max_epoch: 20
+learning_rate: 0.01
+segloss_balance: 'none'
+num_kernel_points: 15
+KP_extent: 1.2
+momentum: 0.98
+weight_decay: 1e-3
+batch_norm_momentum: 0.02
+use_batch_norm: True
+in_points_dim: 3
+fixed_kernel_points: "center"
+KP_influence: "linear"
+aggregation_mode: "sum"
+modulated: false
+class_w: []
+deform_fitting_mode: "point2point"
+deform_fitting_power: 1.0
+deform_lr_factor: 0.1
+repulse_extent: 1.2
+
+# Augmentations
+augment_rotation: 'vertical'
+augment_scale_anisotropic: True
+augment_symmetries: [True, False, False]
+augment_scale_min: 0.9
+augment_scale_max: 1.1
+augment_noise: 0.001
+augment_color: 0.8
+
+# Network architecture
+architecture:
+  - simple
+  - resnetb
+  - resnetb_strided
+  - resnetb
+  - resnetb
+  - resnetb_strided
+  - resnetb
+  - resnetb
+  - resnetb_strided
+  - resnetb_deformable
+  - resnetb_deformable
+  - resnetb_deformable_strided
+  - resnetb_deformable
+  - resnetb_deformable
+  - nearest_upsample
+  - unary
+  - nearest_upsample
+  - unary
+  - nearest_upsample
+  - unary
+  - nearest_upsample
+  - unary

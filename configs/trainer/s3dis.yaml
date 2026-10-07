@@ -1,0 +1,42 @@
+# =============================================================================
+# S3DIS SPECIFIC TRAINER CONFIGURATION
+# =============================================================================
+# Trainer configuration optimized for S3DIS dataset
+
+defaults:
+  - default
+
+# S3DIS specific trainer overrides
+_target_: lightning.pytorch.trainer.Trainer
+
+# Training duration based on original S3DIS config
+# TODO: sort through this
+max_epochs: 150  # From original S3DISConfig.max_epoch
+min_epochs: 1
+
+# Hardware configuration
+accelerator: gpu
+devices: 1
+
+# Validation configuration
+check_val_every_n_epoch: 1
+val_check_interval: 500  # From original config epoch_steps
+
+# Gradient management
+gradient_clip_val: 100.0  # From original S3DISConfig.grad_clip_norm
+gradient_clip_algorithm: "norm"
+
+# Performance optimizations
+precision: "16-mixed"
+accumulate_grad_batches: 1
+
+# Reproducibility and logging
+deterministic: true
+log_every_n_steps: 50
+enable_checkpointing: true
+enable_progress_bar: true
+enable_model_summary: true
+
+# Checkpointing behavior
+# Checkpoint every 10 epochs (from original checkpoint_gap)
+# This will be handled by callbacks, but we set basic trainer behavior
