@@ -119,6 +119,7 @@ class S3DISDataset(PointCloudDataset):
 
         # Stop data is not needed
         if not load_data:
+            self.worker_lock = Lock()
             return
 
         ###################
